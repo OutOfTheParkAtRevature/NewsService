@@ -23,6 +23,7 @@ namespace Model
         public bool IsVisible { get; set; }
         [DisplayName("Is Pinned")]
         public bool IsPinned { get; set; }
+        public DateTime Date { get; set; }
 
     }
 }
