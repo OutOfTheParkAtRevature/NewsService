@@ -13,6 +13,8 @@ namespace Model
         [Key]
         [DisplayName("Article ID")]
         public Guid ArticleID { get; set; }
+        [DisplayName("Team ID")]
+        public Guid TeamID { get; set; }
         [DisplayName("Title")]
         public string Title { get; set; }
         [DisplayName("Body")]
