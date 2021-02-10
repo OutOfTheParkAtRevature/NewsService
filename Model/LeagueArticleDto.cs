@@ -13,6 +13,7 @@ namespace Model
         public string Content { get; set; }
         public DateTime Date { get; set; }
         public bool IsVisible { get; set; }
+        public bool IsPinned { get; set; }
 
 
         public LeagueArticleDto() { }

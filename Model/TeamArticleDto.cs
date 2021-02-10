@@ -14,5 +14,6 @@ namespace Model
         public DateTime Date { get; set; }
         public Guid TeamID { get; set; }
         public bool IsVisible { get; set; }
+        public bool IsPinned { get; set; }
     }
 }

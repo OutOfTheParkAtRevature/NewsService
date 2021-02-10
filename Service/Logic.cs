@@ -31,6 +31,7 @@ namespace Service
             newArticle.Body = leagueArticleDto.Content;
             newArticle.Date = leagueArticleDto.Date;
             newArticle.IsVisible = leagueArticleDto.IsVisible;
+            newArticle.IsPinned = leagueArticleDto.IsPinned;
             _repo.LeagueArticles.Add(newArticle);
             await _repo.CommitSave();
         }
@@ -47,7 +48,40 @@ namespace Service
             articleToEdit.Body = leagueArticleDto.Content;
             articleToEdit.Date = leagueArticleDto.Date;
             articleToEdit.IsVisible = leagueArticleDto.IsVisible;
+            articleToEdit.IsPinned = leagueArticleDto.IsPinned;
             _repo.LeagueArticles.Update(articleToEdit);
+            await _repo.CommitSave();
+        }
+        /// <summary>
+        /// returns a list of league articles that are pinned
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<LeagueArticleDto>> GetPinnedLeagueArticleDto()
+        {
+            List<LeagueArticle> pinnedLeagueArticles = (List<LeagueArticle>)await _repo.GetPinnedLeagueArticles();
+            List<LeagueArticleDto> dtos = new List<LeagueArticleDto>();
+            foreach (var item in pinnedLeagueArticles)
+            {
+                LeagueArticleDto newDto = new LeagueArticleDto();
+                newDto.ArticleID = item.ArticleID;
+                newDto.Title = item.Title;
+                newDto.Content = item.Body;
+                newDto.Date = item.Date;
+                newDto.IsVisible = item.IsVisible;
+                newDto.IsPinned = item.IsPinned;
+                dtos.Add(newDto);
+            }
+            return dtos;
+        }
+        /// <summary>
+        /// deletes a league article by the id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task DeleteleagueArticleById(Guid id)
+        {
+            LeagueArticle articleToDelete = await _repo.GetLeagueArticleById(id);
+            _repo.LeagueArticles.Remove(articleToDelete);
             await _repo.CommitSave();
         }
         /// <summary>
@@ -62,7 +96,7 @@ namespace Service
             newArticle.Body = teamArticleDto.Content;
             newArticle.Date = teamArticleDto.Date;
             newArticle.TeamID = teamArticleDto.TeamID;
-            newArticle.IsVisible = teamArticleDto.IsVisible;
+            newArticle.IsPinned = teamArticleDto.IsPinned;
             _repo.TeamArticles.Add(newArticle);
             await _repo.CommitSave();
         }
@@ -80,6 +114,41 @@ namespace Service
             articleToEdit.TeamID = teamArticleDto.TeamID;
             articleToEdit.IsVisible = teamArticleDto.IsVisible;
             _repo.TeamArticles.Update(articleToEdit);
+            await _repo.CommitSave();
+        }
+
+        /// <summary>
+        /// returns a list of teat articles that are pinned
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<TeamArticleDto>> GetPinnedTeamArticleDto()
+        {
+            List<TeamArticle> pinnedTeamArticles = (List<TeamArticle>)await _repo.GetPinnedTeamArticles();
+            List<TeamArticleDto> dtos = new List<TeamArticleDto>();
+            foreach (var item in pinnedTeamArticles)
+            {
+                TeamArticleDto newDto = new TeamArticleDto();
+                newDto.ArticleID = item.ArticleID;
+                newDto.Title = item.Title;
+                newDto.Content = item.Body;
+                newDto.Date = item.Date;
+                newDto.TeamID = item.TeamID;
+                newDto.IsVisible = item.IsVisible;
+                newDto.IsPinned = item.IsPinned;
+                dtos.Add(newDto);
+            }
+            return dtos;
+        }
+
+        /// <summary>
+        /// deletes a team article by the id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task DeleteTeamicleById(Guid id)
+        {
+            TeamArticle articleToDelete = await _repo.GetTeamArticleById(id);
+            _repo.TeamArticles.Remove(articleToDelete);
             await _repo.CommitSave();
         }
     }
