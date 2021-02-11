@@ -78,7 +78,7 @@ namespace Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task DeleteleagueArticleById(Guid id)
+        public async Task DeleteLeagueArticleById(Guid id)
         {
             LeagueArticle articleToDelete = await _repo.GetLeagueArticleById(id);
             _repo.LeagueArticles.Remove(articleToDelete);
@@ -145,7 +145,7 @@ namespace Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task DeleteTeamicleById(Guid id)
+        public async Task DeleteTeamArticleById(Guid id)
         {
             TeamArticle articleToDelete = await _repo.GetTeamArticleById(id);
             _repo.TeamArticles.Remove(articleToDelete);
