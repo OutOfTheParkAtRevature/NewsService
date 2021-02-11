@@ -61,5 +61,46 @@ namespace Model.Tests
             var results = ValidateModel(teamArticle);
             Assert.True(results.Count == 0);
         }
+
+        /// <summary>
+        /// Makes sure LeagueArticleDto Model works with valid data
+        /// </summary>
+        [Fact]
+        public void ValidateLeagueArticleDto()
+        {
+            var leagueArticleDto = new LeagueArticleDto
+            {
+                ArticleID = Guid.NewGuid(),
+                Title = "goodnews!",
+                Content = "wewon!",
+                Date = DateTime.Now,
+                IsPinned = true,
+                IsVisible = true
+            };
+
+            var results = ValidateModel(leagueArticleDto);
+            Assert.True(results.Count == 0);
+        }
+
+        /// <summary>
+        /// Makes sure TeamArticleDto Model works with valid data
+        /// </summary>
+        [Fact]
+        public void ValidateTeamArticleDto()
+        {
+            var teamArticle = new TeamArticle
+            {
+                ArticleID = Guid.NewGuid(),
+                TeamID = Guid.NewGuid(),
+                Title = "Start of season",
+                Body = "Let's win them all!",
+                Date = DateTime.Now,
+                IsVisible = true,
+                IsPinned = true
+            };
+
+            var results = ValidateModel(teamArticle);
+            Assert.True(results.Count == 0);
+        }
     }
 }
