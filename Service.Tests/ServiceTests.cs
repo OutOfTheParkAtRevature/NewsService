@@ -16,6 +16,9 @@ namespace Service.Tests
         [Fact]
         public async void TestForCreateLeagueArticle()
         {
+            //for coverage
+            var dbContext = new NewsContext();
+
             var options = new DbContextOptionsBuilder<NewsContext>()
             .UseInMemoryDatabase(databaseName: "p3NewsService")
             .Options;
