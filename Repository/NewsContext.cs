@@ -10,8 +10,8 @@ namespace Repository
 {
     public class NewsContext : DbContext
     {
-        public DbSet<TeamArticle> TeamArticles;
-        public DbSet<LeagueArticle> LeagueArticles;
+        public DbSet<TeamArticle> TeamArticles { get; set; }
+        public DbSet<LeagueArticle> LeagueArticles { get; set; }
 
         public NewsContext() { }
 
