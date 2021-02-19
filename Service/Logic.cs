@@ -42,7 +42,7 @@ namespace Service
         /// <returns></returns>
         public async Task EditLeagueArticle(LeagueArticleDto leagueArticleDto)
         {
-            
+
             LeagueArticle articleToEdit = await _repo.GetLeagueArticleById(leagueArticleDto.ArticleID);
             articleToEdit.Title = leagueArticleDto.Title;
             articleToEdit.Body = leagueArticleDto.Content;
@@ -51,6 +51,24 @@ namespace Service
             articleToEdit.IsPinned = leagueArticleDto.IsPinned;
             _repo.LeagueArticles.Update(articleToEdit);
             await _repo.CommitSave();
+        }
+
+        public async Task<IEnumerable<LeagueArticleDto>> GetAllLeagueArticleDto()
+        {
+            List<LeagueArticle> leagueArticles = (List<LeagueArticle>)await _repo.GetLeagueArticles();
+            List<LeagueArticleDto> dtos = new List<LeagueArticleDto>();
+            foreach (var item in leagueArticles)
+            {
+                LeagueArticleDto newDto = new LeagueArticleDto();
+                newDto.ArticleID = item.ArticleID;
+                newDto.Title = item.Title;
+                newDto.Content = item.Body;
+                newDto.Date = item.Date;
+                newDto.IsVisible = item.IsVisible;
+                newDto.IsPinned = item.IsPinned;
+                dtos.Add(newDto);
+            }
+            return dtos;
         }
         /// <summary>
         /// returns a list of league articles that are pinned
@@ -115,6 +133,25 @@ namespace Service
             articleToEdit.IsVisible = teamArticleDto.IsVisible;
             _repo.TeamArticles.Update(articleToEdit);
             await _repo.CommitSave();
+        }
+
+        public async Task<IEnumerable<TeamArticleDto>> GetAllTeamArticleDto()
+        {
+            List<TeamArticle> teamArticles = (List<TeamArticle>)await _repo.GetTeamArticles();
+            List<TeamArticleDto> dtos = new List<TeamArticleDto>();
+            foreach (var item in teamArticles)
+            {
+                TeamArticleDto newDto = new TeamArticleDto();
+                newDto.ArticleID = item.ArticleID;
+                newDto.Title = item.Title;
+                newDto.Content = item.Body;
+                newDto.Date = item.Date;
+                newDto.TeamID = item.TeamID;
+                newDto.IsVisible = item.IsVisible;
+                newDto.IsPinned = item.IsPinned;
+                dtos.Add(newDto);
+            }
+            return dtos;
         }
 
         /// <summary>
