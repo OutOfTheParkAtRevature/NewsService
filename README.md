@@ -22,7 +22,7 @@ This Repository is part of an application designed with a Microservice Architect
 * Equipment Service: https://github.com/OutOfTheParkAtRevature/EquipmentService
 * Frontend: https://github.com/OutOfTheParkAtRevature/Frontend
 * Gateway Service: https://github.com/OutOfTheParkAtRevature/Gateway
-* League Service: https://github.com/OutOfTheParkAtRevature/LeagueService.git
+* League Service: https://github.com/OutOfTheParkAtRevature/LeagueService
 * Message Service: https://github.com/OutOfTheParkAtRevature/MessageService
 * Notification Service: https://github.com/OutOfTheParkAtRevature/NotificationService
 * Playbook Service: https://github.com/OutOfTheParkAtRevature/PlaybookService
