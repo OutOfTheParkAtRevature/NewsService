@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Model.DataTransfer;
 
 namespace Model
 {
@@ -13,6 +14,7 @@ namespace Model
         public string Content { get; set; }
         public DateTime Date { get; set; }
         public Guid TeamID { get; set; }
+        public TeamDto Team { get; set; }
         public bool IsVisible { get; set; }
         public bool IsPinned { get; set; }
     }

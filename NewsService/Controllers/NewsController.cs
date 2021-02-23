@@ -48,11 +48,13 @@ namespace NewsService.Controllers
         [HttpGet]
         public async Task<IEnumerable<TeamArticleDto>> GetTeamArticles()
         {
+            // add logic to get team information
             return await _logic.GetAllTeamArticleDto();
         }
         [HttpGet]
         public async Task<IEnumerable<TeamArticleDto>> GetPinnedTeamArticles()
         {
+            // add logic to get team information
             return await _logic.GetPinnedTeamArticleDto();
         }
         [HttpPost]
