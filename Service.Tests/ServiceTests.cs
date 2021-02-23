@@ -91,6 +91,41 @@ namespace Service.Tests
         }
 
         /// <summary>
+        /// Tests the GetAllLeagueArticleDto() method of Logic
+        /// </summary>
+        [Fact]
+        public async void TestForGetAllLeagueArticleDto()
+        {
+            var options = new DbContextOptionsBuilder<NewsContext>()
+            .UseInMemoryDatabase(databaseName: "p3NewsService")
+            .Options;
+
+            using (var context = new NewsContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                Logic logic = new Logic(r, new NullLogger<Repo>());
+                var leagueArticle = new LeagueArticle()
+                {
+                    ArticleID = Guid.NewGuid(),
+                    Title = "free hotdogs",
+                    Body = "come today to get your hotdogs!",
+                    Date = DateTime.Now,
+                    IsPinned = true,
+                    IsVisible = true
+                };
+                r.LeagueArticles.Add(leagueArticle);
+                await r.CommitSave();
+
+                var getLeagueArticles = await logic.GetAllLeagueArticleDto();
+                var convertedArticles = (List<LeagueArticleDto>)getLeagueArticles;
+                Assert.True(convertedArticles[0].Content.Equals(leagueArticle.Body));
+            }
+        }
+
+        /// <summary>
         /// Tests the GetPinnedLeagueArticleDto() method of Logic
         /// </summary>
         [Fact]
@@ -243,6 +278,42 @@ namespace Service.Tests
         }
 
         /// <summary>
+        /// Tests the GetAllTeamArticleDto() method of Logic
+        /// </summary>
+        [Fact]
+        public async void TestForGetAllTeamArticleDto()
+        {
+            var options = new DbContextOptionsBuilder<NewsContext>()
+            .UseInMemoryDatabase(databaseName: "p3NewsService")
+            .Options;
+
+            using (var context = new NewsContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                Repo r = new Repo(context, new NullLogger<Repo>());
+                Logic logic = new Logic(r, new NullLogger<Repo>());
+                var teamArticle = new TeamArticle()
+                {
+                    ArticleID = Guid.NewGuid(),
+                    Title = "free hotdogs",
+                    Body = "come today to get your hotdogs!",
+                    Date = DateTime.Now,
+                    IsPinned = true,
+                    IsVisible = true,
+                    TeamID = Guid.NewGuid()
+                };
+                r.TeamArticles.Add(teamArticle);
+                await r.CommitSave();
+
+                var getTeamArticles = await logic.GetAllTeamArticleDto();
+                var convertedArticles = (List<TeamArticleDto>)getTeamArticles;
+                Assert.True(convertedArticles[0].Content.Equals(teamArticle.Body));
+            }
+        }
+
+        /// <summary>
         /// Tests the GetPinnedTeamArticleDto() method of Logic
         /// </summary>
         [Fact]
@@ -272,8 +343,8 @@ namespace Service.Tests
                 r.TeamArticles.Add(teamArticle);
                 await r.CommitSave();
 
-                var pinnedLeagueArticle = await logic.GetPinnedTeamArticleDto();
-                var convertedArticle = (List<TeamArticleDto>)pinnedLeagueArticle;
+                var pinnedTeamArticle = await logic.GetPinnedTeamArticleDto();
+                var convertedArticle = (List<TeamArticleDto>)pinnedTeamArticle;
                 Assert.True(convertedArticle[0].Content.Equals(teamArticle.Body));
             }
         }
