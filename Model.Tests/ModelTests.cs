@@ -1,3 +1,4 @@
+using Model.DataTransfer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -62,6 +63,22 @@ namespace Model.Tests
         }
 
         /// <summary>
+        /// Makes sure TeamDto Model works with valid data
+        /// </summary>
+        [Fact]
+        public void ValidateTeamDto()
+        {
+            var teamDto = new TeamDto
+            {
+                TeamID = Guid.NewGuid(),
+                Name = "cubs"
+            };
+
+            var results = ValidateModel(teamDto);
+            Assert.True(results.Count == 0);
+        }
+
+        /// <summary>
         /// Makes sure LeagueArticleDto Model works with valid data
         /// </summary>
         [Fact]
@@ -87,18 +104,26 @@ namespace Model.Tests
         [Fact]
         public void ValidateTeamArticleDto()
         {
-            var teamArticle = new TeamArticle
+
+            var teamDto = new TeamDto
+            {
+                TeamID = Guid.NewGuid(),
+                Name = "cubs"
+            };
+
+            var teamArticleDto = new TeamArticleDto
             {
                 ArticleID = Guid.NewGuid(),
                 TeamID = Guid.NewGuid(),
                 Title = "Start of season",
-                Body = "Let's win them all!",
+                Content = "Let's win them all!",
+                Team = teamDto,
                 Date = DateTime.Now,
                 IsVisible = true,
                 IsPinned = true
             };
 
-            var results = ValidateModel(teamArticle);
+            var results = ValidateModel(teamArticleDto);
             Assert.True(results.Count == 0);
         }
     }
