@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Model;
+using Model.DataTransfer;
+using Newtonsoft.Json;
 using Repository;
 
 namespace Service
@@ -133,21 +137,30 @@ namespace Service
             await _repo.CommitSave();
         }
 
-        public async Task<IEnumerable<TeamArticleDto>> GetAllTeamArticleDto()
+        public async Task<IEnumerable<TeamArticleDto>> GetAllTeamArticleDto(string token)
         {
             List<TeamArticle> teamArticles = (List<TeamArticle>)await _repo.GetTeamArticles();
             List<TeamArticleDto> dtos = new List<TeamArticleDto>();
-            foreach (var item in teamArticles)
+
+            using (var httpClient = new HttpClient())
             {
-                TeamArticleDto newDto = new TeamArticleDto();
-                newDto.ArticleID = item.ArticleID;
-                newDto.Title = item.Title;
-                newDto.Content = item.Body;
-                newDto.Date = item.Date;
-                newDto.TeamID = item.TeamID;
-                newDto.IsVisible = item.IsVisible;
-                newDto.IsPinned = item.IsPinned;
-                dtos.Add(newDto);
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                foreach (var item in teamArticles)
+                {
+                    var response = await httpClient.GetAsync($"api/Team/{item.TeamID}");
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    var team = JsonConvert.DeserializeObject<TeamDto>(apiResponse);
+                    TeamArticleDto newDto = new TeamArticleDto();
+                    newDto.ArticleID = item.ArticleID;
+                    newDto.Title = item.Title;
+                    newDto.Content = item.Body;
+                    newDto.Date = item.Date;
+                    newDto.TeamID = item.TeamID;
+                    newDto.Team = team;
+                    newDto.IsVisible = item.IsVisible;
+                    newDto.IsPinned = item.IsPinned;
+                    dtos.Add(newDto);
+                }
             }
             return dtos;
         }
@@ -156,22 +169,34 @@ namespace Service
         /// returns a list of teat articles that are pinned
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<TeamArticleDto>> GetPinnedTeamArticleDto()
+        public async Task<IEnumerable<TeamArticleDto>> GetPinnedTeamArticleDto(string token)
         {
             List<TeamArticle> pinnedTeamArticles = (List<TeamArticle>)await _repo.GetPinnedTeamArticles();
             List<TeamArticleDto> dtos = new List<TeamArticleDto>();
-            foreach (var item in pinnedTeamArticles)
+            using (var httpClient = new HttpClient())
             {
-                TeamArticleDto newDto = new TeamArticleDto();
-                newDto.ArticleID = item.ArticleID;
-                newDto.Title = item.Title;
-                newDto.Content = item.Body;
-                newDto.Date = item.Date;
-                newDto.TeamID = item.TeamID;
-                newDto.IsVisible = item.IsVisible;
-                newDto.IsPinned = item.IsPinned;
-                dtos.Add(newDto);
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                
+                foreach (var item in pinnedTeamArticles)
+                {
+                    var response = await httpClient.GetAsync($"api/Team/{item.TeamID}");
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    var team = JsonConvert.DeserializeObject<TeamDto>(apiResponse);
+
+                    TeamArticleDto newDto = new TeamArticleDto();
+                    newDto.ArticleID = item.ArticleID;
+                    newDto.Title = item.Title;
+                    newDto.Content = item.Body;
+                    newDto.Date = item.Date;
+                    newDto.TeamID = item.TeamID;
+                    newDto.Team = team;
+                    newDto.IsVisible = item.IsVisible;
+                    newDto.IsPinned = item.IsPinned;
+                    dtos.Add(newDto);
+                }
             }
+            
             return dtos;
         }
 
