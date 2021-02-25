@@ -11,7 +11,6 @@ namespace NewsService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin, League Manager, Head Coach, Assistant Coach, Parent, Player")]
     public class NewsController : ControllerBase
     {
         private readonly Logic _logic;
