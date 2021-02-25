@@ -147,7 +147,7 @@ namespace Service
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 foreach (var item in teamArticles)
                 {
-                    var response = await httpClient.GetAsync($"api/Team/{item.TeamID}");
+                    var response = await httpClient.GetAsync($"http://20.62.247.144/api/Team/{item.TeamID}");
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     var team = JsonConvert.DeserializeObject<TeamDto>(apiResponse);
                     TeamArticleDto newDto = new TeamArticleDto();
@@ -180,7 +180,7 @@ namespace Service
                 
                 foreach (var item in pinnedTeamArticles)
                 {
-                    var response = await httpClient.GetAsync($"api/Team/{item.TeamID}");
+                    var response = await httpClient.GetAsync($"http://20.62.247.144/api/Team/{item.TeamID}");
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     var team = JsonConvert.DeserializeObject<TeamDto>(apiResponse);
 
