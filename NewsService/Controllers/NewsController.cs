@@ -21,37 +21,39 @@ namespace NewsService.Controllers
             _logic = logic;
         }
 
-        [HttpGet]
-        [Authorize]
+
+        [HttpGet("league")]
         public async Task<IEnumerable<LeagueArticleDto>> GetLeagueArticles()
         {
             return await _logic.GetAllLeagueArticleDto();
         }
-        [HttpGet]
-        [Authorize]
+
+
+        [HttpGet("league/pinned")]
         public async Task<IEnumerable<LeagueArticleDto>> GetPinnedLeagueArticles()
         {
             return await _logic.GetPinnedLeagueArticleDto();
         }
-        [HttpPost]
+
+        [HttpPost("league")]
         [Authorize(Roles ="Admin, League Manager")]
         public async Task CreateLeagueArticle(LeagueArticleDto leagueArticleDto)
         {
             await _logic.CreateLeagueArticle(leagueArticleDto);
         }
-        [HttpPut]
+        [HttpPut("league")]
         [Authorize(Roles = "Admin, League Manager")]
         public async Task EditLeagueArticle(LeagueArticleDto leagueArticleDto)
         {
             await _logic.EditLeagueArticle(leagueArticleDto);
         }
-        [HttpDelete("{id}")]
+        [HttpDelete("league/{id}")]
         [Authorize(Roles = "Admin, League Manager")]
         public async Task DeleteLeagueArticleById(Guid id)
         {
             await _logic.DeleteLeagueArticleById(id);
         }
-        [HttpGet]
+        [HttpGet("team")]
         [Authorize]
         public async Task<IEnumerable<TeamArticleDto>> GetTeamArticles()
         {
@@ -59,7 +61,7 @@ namespace NewsService.Controllers
             var token = await HttpContext.GetTokenAsync("access_token");
             return await _logic.GetAllTeamArticleDto(token);
         }
-        [HttpGet]
+        [HttpGet("team/pinned")]
         [Authorize]
         public async Task<IEnumerable<TeamArticleDto>> GetPinnedTeamArticles()
         {
@@ -67,19 +69,19 @@ namespace NewsService.Controllers
             var token = await HttpContext.GetTokenAsync("access_token");
             return await _logic.GetPinnedTeamArticleDto(token);
         }
-        [HttpPost]
+        [HttpPost("team")]
         [Authorize(Roles = "Admin, League Manager, Head Coach")]
         public async Task CreateTeamArticle(TeamArticleDto teamArticleDto)
         {
             await _logic.CreateTeamArticle(teamArticleDto);
         }
-        [HttpPut]
+        [HttpPut("team")]
         [Authorize(Roles = "Admin, League Manager, Head Coach")]
         public async Task EditTeamArticle(TeamArticleDto teamArticleDto)
         {
             await _logic.EditTeamArticle(teamArticleDto);
         }
-        [HttpDelete("{id}")]
+        [HttpDelete("team/{id}")]
         [Authorize(Roles = "Admin, League Manager, Head Coach")]
         public async Task DeleteTeamArticle(Guid id)
         {
