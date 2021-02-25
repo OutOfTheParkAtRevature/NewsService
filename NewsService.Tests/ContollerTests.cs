@@ -242,7 +242,7 @@ namespace NewsService.Tests
         /// <summary>
         /// Tests the GetPinnedTeamArticles() method of NewsController
         /// </summary>
-        [Fact]
+        //[Fact]
         //public async void TestForGetPinnedTeamArticles()
         //{
         //    var options = new DbContextOptionsBuilder<NewsContext>()
