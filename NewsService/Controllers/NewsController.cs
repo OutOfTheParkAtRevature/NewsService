@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Model;
@@ -55,14 +56,16 @@ namespace NewsService.Controllers
         public async Task<IEnumerable<TeamArticleDto>> GetTeamArticles()
         {
             // add logic to get team information
-            return await _logic.GetAllTeamArticleDto();
+            var token = await HttpContext.GetTokenAsync("access_token");
+            return await _logic.GetAllTeamArticleDto(token);
         }
         [HttpGet]
         [Authorize]
         public async Task<IEnumerable<TeamArticleDto>> GetPinnedTeamArticles()
         {
             // add logic to get team information
-            return await _logic.GetPinnedTeamArticleDto();
+            var token = await HttpContext.GetTokenAsync("access_token");
+            return await _logic.GetPinnedTeamArticleDto(token);
         }
         [HttpPost]
         [Authorize(Roles = "Admin, League Manager, Head Coach")]
