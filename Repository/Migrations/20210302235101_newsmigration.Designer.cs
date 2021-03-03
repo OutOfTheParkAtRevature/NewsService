@@ -10,8 +10,8 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(NewsContext))]
-    [Migration("20210224205823_InitializeNewsDB")]
-    partial class InitializeNewsDB
+    [Migration("20210302235101_newsmigration")]
+    partial class newsmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
