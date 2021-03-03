@@ -33,7 +33,7 @@ metadata:
   namespace: default
 spec:
   ports:
-    - name: http
+    - name: news-http
       protocol: TCP
       port: 80
       targetPort: 80
